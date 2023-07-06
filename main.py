@@ -1,16 +1,15 @@
-# This is a sample Python script.
+from bip_utils import Bip39MnemonicGenerator, Bip39SeedGenerator, Bip44, Bip44Coins
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
+def generate_wallet():
+    mnemonic = Bip39MnemonicGenerator().FromWordsNumber(words_num=12)
+    print(mnemonic)
+    seed = Bip39SeedGenerator(mnemonic).Generate()
+    print(seed)
+    wallet = Bip44.FromSeed(seed, Bip44Coins.ETHEREUM)
+    print(wallet)
+    print(wallet.PublicKey().ToAddress())
+    print(wallet.PrivateKey().Raw().ToHex())
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    generate_wallet()
